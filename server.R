@@ -114,8 +114,8 @@ shinyServer(function(input, output, session) {
       type <- getTypeFromDB(input[[paste0('Filter',filterNumber)]], connection)
       DV <- getDVFromDB(input[[paste0('Filter',filterNumber)]], connection)
       names(DV) <- NULL
-      if (input[[paste0('Filter',filterNumber)]] == 'NONE')
-        return(helpText("Select a filter above..."))
+      if (input[[paste0('Filter',filterNumber)]] == '')
+        return()#helpText("Select a filter above..."))
       else
         switch(type,
                NUM = sliderInput( paste0('FilterValue',filterNumber), "Choose an interval:", DV[1], DV[2],c(DV[1], DV[2])),
@@ -138,7 +138,7 @@ shinyServer(function(input, output, session) {
     for (i in 1:2) {
       s_V <- input[[paste0('Filter', i)]]
       V0 <- input[[paste0('FilterValue', i)]]
-      if (s_V != 'NONE') {
+      if (s_V != '') {
         v_s_V[i_V] <- s_V
         l_V0[[i_V]] <- V0
         i_V <- i_V + 1
